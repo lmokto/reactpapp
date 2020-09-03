@@ -50,7 +50,6 @@ stages:
           - task: AzureFileCopy@3
             inputs:
               sourcePath: $(Pipeline.Workspace)/build
-              azureSubscription: 'AzureRM'
               destination: azureBlob
               storage: $(storageaccountname)
               containerName: "$web"
