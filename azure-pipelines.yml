@@ -32,3 +32,25 @@ stages:
         SourceFolder: 'build'
         TargetFolder: '$(build.artifactstagingdirectory)'
         CleanTargetFolder: true
+- stage: deploy
+  jobs:
+  - deployment: deploy
+    pool:
+      vmImage: 'ubuntu-latest'
+    variables:
+      storageaccountname: myappdemoluis
+    environment: 'Deploy to Storage'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: build
+
+          - task: AzureFileCopy@3
+            inputs:
+              sourcePath: $(Pipeline.Workspace)/build
+              azureSubscription: 'AzureRM'
+              destination: azureBlob
+              storage: $(storageaccountname)
+              containerName: "$web"
