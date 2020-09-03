@@ -16,19 +16,19 @@ stages:
     - task: Npm@1
       displayName: 'npm install'
       inputs:
-        workingDir: 'reactpapp'
+        workingDir: '.'
         command: install
 
     - task: Npm@1
       displayName: 'npm build'
       inputs:
-        workingDir: 'reactpapp'
+        workingDir: '.'
         command: custom
         customCommand: run-script build
 
     - task: CopyFiles@2
       displayName: 'Copy Files'
       inputs:
-        SourceFolder: 'reactpapp\build'
+        SourceFolder: '.\build'
         TargetFolder: '$(build.artifactstagingdirectory)'
         CleanTargetFolder: true
